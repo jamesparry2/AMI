@@ -3,7 +3,7 @@ package signup
 import "github.com/jamesparry2/aim/service-authenticate/app/repository"
 
 type SignupI interface {
-	Signup(*SignupRequest) SignupResponse
+	Signup(*SignupRequest) error
 }
 
 type Client struct {

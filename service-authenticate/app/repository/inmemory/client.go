@@ -5,5 +5,7 @@ type Client struct {
 }
 
 func New() *Client {
-	return &Client{}
+	return &Client{
+		values: map[string]any{},
+	}
 }

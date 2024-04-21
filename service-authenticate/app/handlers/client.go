@@ -7,19 +7,23 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/jamesparry2/aim/service-authenticate/app/core/login"
+	"github.com/jamesparry2/aim/service-authenticate/app/core/signup"
 )
 
 type Client struct {
-	login login.LoginI
+	login  login.LoginI
+	signup signup.SignupI
 }
 
 type ClientOptions struct {
-	Login login.LoginI
+	Login  login.LoginI
+	Signup signup.SignupI
 }
 
 func New(opts *ClientOptions) *Client {
 	return &Client{
-		login: opts.Login,
+		login:  opts.Login,
+		signup: opts.Signup,
 	}
 }
 

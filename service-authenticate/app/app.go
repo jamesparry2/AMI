@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/jamesparry2/aim/service-authenticate/app/core/login"
+	"github.com/jamesparry2/aim/service-authenticate/app/core/signup"
 	"github.com/jamesparry2/aim/service-authenticate/app/handlers"
 	"github.com/jamesparry2/aim/service-authenticate/app/repository/inmemory"
 )
@@ -19,8 +20,13 @@ func Run() {
 		Repo: inmemoryStore,
 	})
 
+	signupCore := signup.New(&signup.ClientOptions{
+		Repo: inmemoryStore,
+	})
+
 	handlers := handlers.New(&handlers.ClientOptions{
-		Login: loginCore,
+		Login:  loginCore,
+		Signup: signupCore,
 	})
 
 	app := fiber.New(fiber.Config{
@@ -28,7 +34,9 @@ func Run() {
 			r := struct {
 				Message     string `json:"message"`
 				IsRetryable bool   `json:"is_retryable"`
-			}{}
+			}{
+				Message: err.Error(),
+			}
 
 			code := http.StatusInternalServerError
 			r.IsRetryable = false
